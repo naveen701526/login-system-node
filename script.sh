@@ -1,3 +1,3 @@
 git add .
-git commit -m 'Create Login and Register View Template'
+git commit -m 'Handling Post Request of Form in Register Page'
 git push origin master
