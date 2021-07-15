@@ -1,3 +1,3 @@
 git add .
-git commit -m 'middle ware for flash, passport, session dependency'
+git commit -m 'login page error when wrong password typed'
 git push origin master

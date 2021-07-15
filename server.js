@@ -28,8 +28,8 @@ app.use(
     saveUninitialized: false,
   })
 );
-app.use(passport.initialize())
-app.use(passport.session())
+app.use(passport.initialize());
+app.use(passport.session());
 app.get("/", (req, res) => {
   res.render("index.ejs", { name: "Naveen" });
 });
@@ -38,7 +38,14 @@ app.get("/login", (req, res) => {
   res.render("login.ejs");
 });
 
-app.post("/login", (req, res) => {});
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureFlash: true,
+  })
+);
 
 app.get("/register", (req, res) => {
   res.render("register.ejs");
