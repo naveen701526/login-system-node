@@ -11,6 +11,7 @@ const initializePassport = require("./passportConfig");
 const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
+const methodOverride = require("method-override");
 
 initializePassport(
   passport,
@@ -32,6 +33,8 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(methodOverride("_method"));
+
 app.get("/", checkAuthenticate, (req, res) => {
   res.render("index.ejs", { name: req.user.name });
 });
@@ -41,7 +44,8 @@ app.get("/login", checkNotAuthenticate, (req, res) => {
 });
 
 app.post(
-  "/login", checkNotAuthenticate,
+  "/login",
+  checkNotAuthenticate,
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",
@@ -70,21 +74,23 @@ app.post("/register", checkNotAuthenticate, async (req, res) => {
   console.log(users);
 });
 
+app.delete("/logout", (req, res) => {
+  req.logOut();
+  res.redirect("/login");
+});
 
-
-
-function checkAuthenticate(req, res, next){
-  if (req.isAuthenticated()){
-    return next()
+function checkAuthenticate(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
   }
-  res.redirect('/login')
+  res.redirect("/login");
 }
 
-function checkNotAuthenticate(req,res,next) {
-  if (req.isAuthenticated()){
-    return res.redirect('/')
+function checkNotAuthenticate(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect("/");
   }
-  next()
+  next();
 }
 
 app.listen(3000);

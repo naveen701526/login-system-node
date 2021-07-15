@@ -1,3 +1,3 @@
 git add .
-git commit -m "when user is logged in they can't login again "
+git commit -m "delete request to logout of the page "
 git push origin master
