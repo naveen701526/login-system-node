@@ -1,3 +1,3 @@
 git add .
-git commit -m 'successful login on entering correct credentials'
+git commit -m 'redirect the homepage to login page by default.'
 git push origin master
