@@ -36,12 +36,12 @@ app.get("/", checkAuthenticate, (req, res) => {
   res.render("index.ejs", { name: req.user.name });
 });
 
-app.get("/login", (req, res) => {
+app.get("/login", checkNotAuthenticate, (req, res) => {
   res.render("login.ejs");
 });
 
 app.post(
-  "/login",
+  "/login", checkNotAuthenticate,
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",
@@ -49,11 +49,11 @@ app.post(
   })
 );
 
-app.get("/register", (req, res) => {
+app.get("/register", checkNotAuthenticate, (req, res) => {
   res.render("register.ejs");
 });
 
-app.post("/register", async (req, res) => {
+app.post("/register", checkNotAuthenticate, async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     users.push({
@@ -70,11 +70,21 @@ app.post("/register", async (req, res) => {
   console.log(users);
 });
 
+
+
+
 function checkAuthenticate(req, res, next){
   if (req.isAuthenticated()){
     return next()
   }
   res.redirect('/login')
+}
+
+function checkNotAuthenticate(req,res,next) {
+  if (req.isAuthenticated()){
+    return res.redirect('/')
+  }
+  next()
 }
 
 app.listen(3000);
