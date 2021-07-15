@@ -1,3 +1,3 @@
 git add .
-git commit -m 'Check Password is Right or Not in Login Page using Passport dependency'
+git commit -m 'Passport Configured'
 git push origin master

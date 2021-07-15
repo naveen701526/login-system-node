@@ -5,7 +5,11 @@ const bcrypt = require("bcrypt");
 
 const initializePassport = require('./passportConfig');
 const passport = require("passport");
-initializePassport(passport)
+
+initializePassport(
+   passport,
+   email => users.find(user => user.email === email)
+)
 
 const users = [];
 
